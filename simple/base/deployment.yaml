@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: test
+  labels:
+    key: val
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: test-container
+        image: test.gcr.io/test-container:latest
+        command: ["./run"]
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: GOENV
+          value: develop
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 1
+            memory: 1Gi
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /healthz
