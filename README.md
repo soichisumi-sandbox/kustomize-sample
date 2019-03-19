@@ -1,0 +1,3 @@
+# kustomize-sample
+
+see Makefile
